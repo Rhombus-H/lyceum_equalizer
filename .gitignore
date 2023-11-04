@@ -1,0 +1,17 @@
+# Environments
+
+.env
+.venv
+env/
+venv/
+
+#PyInstaller
+
+*.manifest
+*.spec
+
+# Editors and IDEs
+.vscode/
+.idea/
+
+__pycache__/
