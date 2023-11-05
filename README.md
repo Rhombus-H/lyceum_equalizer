@@ -14,5 +14,5 @@
     - `pip install -r requirements/dev.txt`
     - `pip install -r requirements/dist.txt`
 2. Сборка:
-    - `*placeholder*`
+    - `*пласеыыыыы*`
 
