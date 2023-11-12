@@ -1,16 +1,12 @@
 from PyQt5 import uic
 import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from widgets import sliders, presets
+
 
 class PyLizer(QMainWindow):
     def __init__(self):
         super().__init__()
-        f = io.StringIO(template)
-        uic.loadUi(f, self)
-        self.PlayButton.clicked.connect(lambda: print("a"))
-        self.StopButton.clicked.connect(lambda: print("s"))
-        self.ClearButton.clicked.connect(lambda: print("a"))
-        self.SaveButton.clicked.connect(lambda: print("a"))
-        self.AcceptButton.clicked.connect(lambda: print("a"))
 
 
 if __name__ == '__main__':

@@ -28,12 +28,12 @@
    <widget class="QWidget" name="">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="slider_layout">
        <property name="spacing">
-        <number>33</number>
+        <number>20</number>
        </property>
        <item>
-        <widget class="QSlider" name="slider1">
+        <widget class="QSlider" name="slider_1">
          <property name="minimum">
           <number>-6</number>
          </property>
@@ -45,27 +45,30 @@
          </property>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBothSides</enum>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSlider" name="slider2">
+        <widget class="QSlider" name="slider_2">
          <property name="minimum">
           <number>-6</number>
          </property>
          <property name="maximum">
           <number>6</number>
          </property>
-         <property name="value">
-          <number>0</number>
-         </property>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBothSides</enum>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSlider" name="slider3">
+        <widget class="QSlider" name="slider_3">
          <property name="minimum">
           <number>-6</number>
          </property>
@@ -77,27 +80,30 @@
          </property>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBothSides</enum>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSlider" name="slider4">
+        <widget class="QSlider" name="slider_4">
          <property name="minimum">
           <number>-6</number>
          </property>
          <property name="maximum">
           <number>6</number>
          </property>
-         <property name="value">
-          <number>0</number>
-         </property>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBothSides</enum>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSlider" name="slider5">
+        <widget class="QSlider" name="slider_5">
          <property name="minimum">
           <number>-6</number>
          </property>
@@ -109,11 +115,14 @@
          </property>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBothSides</enum>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSlider" name="slider6">
+        <widget class="QSlider" name="slider_6">
          <property name="minimum">
           <number>-6</number>
          </property>
@@ -125,74 +134,102 @@
          </property>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBothSides</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="slider_7">
+         <property name="minimum">
+          <number>-6</number>
+         </property>
+         <property name="maximum">
+          <number>6</number>
+         </property>
+         <property name="value">
+          <number>0</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBothSides</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="slider_8">
+         <property name="minimum">
+          <number>-6</number>
+         </property>
+         <property name="maximum">
+          <number>6</number>
+         </property>
+         <property name="value">
+          <number>0</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBothSides</enum>
          </property>
         </widget>
        </item>
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QSpinBox" name="spinBox_1">
-         <property name="minimum">
-          <number>-6</number>
-         </property>
-         <property name="maximum">
-          <number>6</number>
+        <widget class="QLineEdit" name="lineEdit">
+         <property name="text">
+          <string>60 Hz</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_2">
-         <property name="minimum">
-          <number>-6</number>
-         </property>
-         <property name="maximum">
-          <number>6</number>
+        <widget class="QLineEdit" name="lineEdit_6">
+         <property name="text">
+          <string>230 Hz</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_3">
-         <property name="minimum">
-          <number>-6</number>
-         </property>
-         <property name="maximum">
-          <number>6</number>
+        <widget class="QLineEdit" name="lineEdit_7">
+         <property name="text">
+          <string>910 Hz</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_6">
-         <property name="minimum">
-          <number>-6</number>
-         </property>
-         <property name="maximum">
-          <number>6</number>
+        <widget class="QLineEdit" name="lineEdit_8">
+         <property name="text">
+          <string>910 Hz</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_4">
-         <property name="minimum">
-          <number>-6</number>
-         </property>
-         <property name="maximum">
-          <number>6</number>
+        <widget class="QLineEdit" name="lineEdit_4">
+         <property name="text">
+          <string>4 kHz</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="spinBox_5">
-         <property name="minimum">
-          <number>-6</number>
-         </property>
-         <property name="maximum">
-          <number>6</number>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="lineEdit_3"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_2"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_5"/>
        </item>
       </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2"/>
      </item>
     </layout>
    </widget>
@@ -227,7 +264,7 @@
      <x>160</x>
      <y>50</y>
      <width>491</width>
-     <height>26</height>
+     <height>31</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -273,6 +310,16 @@
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>-30 Дб</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QSlider" name="volume_slider">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -282,6 +329,9 @@
         </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::NoTicks</enum>
         </property>
        </widget>
       </item>
@@ -306,9 +356,9 @@
    <property name="geometry">
     <rect>
      <x>120</x>
-     <y>53</y>
+     <y>83</y>
      <width>37</width>
-     <height>201</height>
+     <height>161</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -317,16 +367,6 @@
       <property name="spacing">
        <number>10</number>
       </property>
-      <item>
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>-30 Дб</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-        </property>
-       </widget>
-      </item>
       <item>
        <widget class="QLabel" name="label_2">
         <property name="text">
