@@ -92,10 +92,3 @@ def apply_equalization(audio_file):
     # slider_values = {'80Hz': 4, '200Hz': 2, '800Hz': 0, '2kHz': -2, '5kHz': -4, '12kHz': -6}
     # save_slider_values(slider_values)
     # apply_equalization('input.wav')
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = QMainWindow()
-    window.show()
-    sys.exit(app.exec_())
