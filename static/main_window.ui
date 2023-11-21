@@ -457,12 +457,12 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="VolumeEdit">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
+         <widget class="QSpinBox" name="spinBox">
+          <property name="minimum">
+           <number>-30</number>
+          </property>
+          <property name="maximum">
+           <number>30</number>
           </property>
          </widget>
         </item>
@@ -575,18 +575,17 @@
                 <height>100</height>
                </size>
               </property>
+              <property name="autoFillBackground">
+               <bool>true</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-image: url(:/newPrefix/x182.jpg.pagespeed.ic.3t0nB9RsUt.jpg);</string>
+              </property>
               <item>
                <property name="text">
                 <string>test</string>
                </property>
               </item>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_2">
-              <property name="text">
-               <string>Удалить пресет</string>
-              </property>
              </widget>
             </item>
             <item>
@@ -632,7 +631,7 @@
      <x>0</x>
      <y>0</y>
      <width>1022</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -680,6 +679,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="test.qrc"/>
+ </resources>
  <connections/>
 </ui>
