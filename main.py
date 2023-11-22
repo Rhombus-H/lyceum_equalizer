@@ -1,6 +1,7 @@
 import sqlite3
 import sys
-import test_qrc
+
+import test_qrc  # resource for a picture
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from widgets import main_window
