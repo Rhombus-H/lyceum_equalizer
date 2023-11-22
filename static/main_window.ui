@@ -579,7 +579,7 @@
                <bool>true</bool>
               </property>
               <property name="styleSheet">
-               <string notr="true">background-image: url(:/newPrefix/x182.jpg.pagespeed.ic.3t0nB9RsUt.jpg);</string>
+               <string notr="true">background-image: url(:/test/x182.jpg.pagespeed.ic.3t0nB9RsUt.jpg);</string>
               </property>
               <item>
                <property name="text">

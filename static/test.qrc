@@ -1,5 +1,5 @@
 <RCC>
-  <qresource prefix="newPrefix">
+  <qresource prefix="test">
     <file>x182.jpg.pagespeed.ic.3t0nB9RsUt.jpg</file>
   </qresource>
 </RCC>
