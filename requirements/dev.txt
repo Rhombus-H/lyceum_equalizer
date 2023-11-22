@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 pydub==0.25.1
+=======
+pydub==0.25.1
+>>>>>>> 207d707 (rebuilded the structure for static (UI) files)
