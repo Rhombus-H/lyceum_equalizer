@@ -9,7 +9,7 @@ from widgets import main_window
 import sqlite3
 import logging
 from pydub import AudioSegment
-from pydub import effects
+from pydub import effects, equalize
 
 
 class Main(QMainWindow):
@@ -17,89 +17,89 @@ class Main(QMainWindow):
         super().__init__()
         uic.loadUi("static/main_window.ui", self)
 
-    def get_slider_values(self):
+    def get_slider_values_from_ui(self):
         """
-        Retrieves the slider values from the database.
+        Retrieves the values of the sliders from the UI and returns them as a dictionary.
 
         Returns:
-            dict: A dictionary containing the slider values.
+            slider_values (dict): A dictionary containing the names of the sliders as keys and their corresponding values as values.
         """
-        try:
-            # Connect to the SQLite database
-            conn = sqlite3.connect('presets_base.db')
-            cursor = conn.cursor()
+        slider_values = {}
+        for i in range(6):
+            slider_name = f"slider_{i + 1}"
+            slider_value = getattr(self, slider_name).value()
+            slider_values[slider_name] = slider_value
+        return slider_values
 
-            # Retrieve slider values from the database
-            cursor.execute("SELECT * FROM sliders")
-            rows = cursor.fetchall()
-
-            slider_values = {}
-            for row in rows:
-                slider_name, slider_value = row
-                slider_values[slider_name] = slider_value
-
-            # Close the database connection
-            conn.close()
-
-            return slider_values
-        except Exception as e:
-            logging.error(f"Error retrieving slider values: {e}")
-            return {}
-
-    def save_slider_values(self, slider_values):
+    def get_slider_values_from_db(self, preset):
         """
-        Saves the slider values to the database.
+        Retrieves the slider values from the database for a given preset.
+
+        Parameters:
+            preset (str): The name of the preset.
+
+        Returns:
+            list: A list of slider values retrieved from the database.
+        """
+        cursor = self.connection.cursor('presets_base.db')
+        cursor.execute('SELECT freqency_1, freqency_2, freqency_3, freqency_4, freqency_5, freqency_6 FROM ?', (preset,))
+        slider_values = cursor.fetchall()
+        return slider_values
+
+    def get_preamp_value_from_ui(self):
+        """
+        Returns the value of the preamp slider from the user interface.
+
+        :return: The value of the preamp slider.
+        """
+        return self.preamp_slider.value()
+
+    def get_preamp_value_from_db(self, preset):
+        """
+        Retrieves the preamp value associated with a given preset from the 'presets_base.db' database.
 
         Args:
-            slider_values (dict): A dictionary containing the slider values.
+            preset (str): The name of the preset.
+
+        Returns:
+            list: A list containing the preamp value(s) associated with the preset.
         """
-        try:
-            # Connect to the SQLite database
-            conn = sqlite3.connect('presets_base.db')
-            cursor = conn.cursor()
+        cursor = self.connection.cursor('presets_base.db')
+        cursor.execute('SELECT preamp FROM ?', (preset,))
+        preamp_value = cursor.fetchall()
+        return preamp_value
 
-            # Clear the existing slider values in the database
-            cursor.execute("DELETE FROM sliders")
-
-            # Save the new slider values to the database
-            for slider_name, slider_value in slider_values.items():
-                cursor.execute("INSERT INTO sliders VALUES (?, ?)", (slider_name, slider_value))
-
-            # Commit the changes and close the database connection
-            conn.commit()
-            conn.close()
-        except Exception as e:
-            logging.error(f"Error saving slider values: {e}")
-
-    def apply_equalization(self, audio_file):
+    def set_slider_values(self, preset):
         """
-        Applies equalization to the given audio file using the slider values.
+        Sets the values of sliders based on the given preset.
 
-        Args:
-            audio_file (str): The path to the input audio file.
+        Parameters:
+            preset (str): The name of the preset.
+
+        Returns:
+            None
         """
-        try:
-            # Retrieve slider values from the database
-            slider_values = get_slider_values()
+        slider_values = self.get_slider_values_from_db(preset)
+        for i in range(6):
+            slider_name = f"slider_{i + 1}"
+            slider_value = slider_values[i]
+            setattr(self, slider_name, slider_value)
 
-            # Load the audio file
-            audio = AudioSegment.from_file(audio_file)
+    def set_preamp_value(self, preset):
+        """
+        Set the value of the preamp slider based on the given preset.
 
-            # Apply equalization using the slider values
-            equalized_audio = equalize(audio, bands=slider_values)
+        Parameters:
+            preset (str): The name of the preset to set the preamp value for.
 
-            # Export the equalized audio to a new file
-            equalized_audio.export('output.wav', format='wav')
-        except Exception as e:
-            logging.error(f"Error applying equalization: {e}")
+        Returns:
+            None
+        """
+        value = self.get_preamp_value_from_db(preset)
+        self.preamp_slider.setValue(value)
 
-    # Example usage
-    # slider_values = {'80Hz': 4, '200Hz': 2, '800Hz': 0, '2kHz': -2, '5kHz': -4, '12kHz': -6}
-    # save_slider_values(slider_values)
-    # apply_equalization('input.wav')
+    def create_preset(self):
 
-def except_hook(cls, exception, traceback):
-    sys.__excepthook__(cls, exception, traceback)
 
 
 if __name__ == "__main__":
@@ -107,5 +107,3 @@ if __name__ == "__main__":
     ex = Main()
     ex.show()
     sys.exit(app.exec_())
-
-

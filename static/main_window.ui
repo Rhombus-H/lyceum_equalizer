@@ -457,12 +457,12 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox">
-          <property name="minimum">
-           <number>-30</number>
-          </property>
-          <property name="maximum">
-           <number>30</number>
+         <widget class="QLineEdit" name="VolumeEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
          </widget>
         </item>
@@ -477,7 +477,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSlider" name="volume_slider">
+         <widget class="QSlider" name="preamp_slider">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -575,12 +575,6 @@
                 <height>100</height>
                </size>
               </property>
-              <property name="autoFillBackground">
-               <bool>true</bool>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-image: url(:/test/x182.jpg.pagespeed.ic.3t0nB9RsUt.jpg);</string>
-              </property>
               <item>
                <property name="text">
                 <string>test</string>
@@ -589,9 +583,9 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit">
+             <widget class="QPushButton" name="pushButton_2">
               <property name="text">
-               <string>Введите название пресета</string>
+               <string>Удалить пресет</string>
               </property>
              </widget>
             </item>
@@ -638,7 +632,7 @@
      <x>0</x>
      <y>0</y>
      <width>1022</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -686,8 +680,6 @@
    </property>
   </action>
  </widget>
- <resources>
-  <include location="test.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
