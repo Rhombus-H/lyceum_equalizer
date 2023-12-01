@@ -3,19 +3,34 @@ import sys
 
 import test_qrc  # resource for a picture
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from widgets import main_window
+from PyQt5.QtWidgets import QApplication, QMainWindow, QColorDialog
+from widgets import main_window, equalize
 
 import sqlite3
 import logging
 from pydub import AudioSegment
-from pydub import effects, equalize
+from pydub import effects
 
 
 class Main(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("static/main_window.ui", self)
+        self.initUI()
+
+    def initUI(self):
+        self.change_color_button.clicked.connect(self.change_color_of_buttons)
+
+    def change_color_of_buttons(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            self.change_color_button.setStyleSheet(
+                "background-color: {}".format(color.name()))
+            self.pushButton.setStyleSheet(
+                "background-color: {}".format(color.name()))
+            self.accept_button.setStyleSheet(
+                "background-color: {}".format(color.name()))
+
 
     def get_slider_values_from_ui(self):
         """
@@ -99,6 +114,7 @@ class Main(QMainWindow):
         self.preamp_slider.setValue(value)
 
     def create_preset(self):
+        pass
 
 
 

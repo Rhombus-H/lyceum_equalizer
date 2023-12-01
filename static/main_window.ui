@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1022</width>
-    <height>952</height>
+    <width>900</width>
+    <height>835</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -575,6 +575,9 @@
                 <height>100</height>
                </size>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-image: url(:/test/x182.jpg.pagespeed.ic.3t0nB9RsUt.jpg);</string>
+              </property>
               <item>
                <property name="text">
                 <string>test</string>
@@ -583,9 +586,9 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_2">
+             <widget class="QLineEdit" name="preset_name_button">
               <property name="text">
-               <string>Удалить пресет</string>
+               <string>Введите название пресета</string>
               </property>
              </widget>
             </item>
@@ -600,6 +603,13 @@
              <widget class="QPushButton" name="accept_button">
               <property name="text">
                <string>Принять</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="change_color_button">
+              <property name="text">
+               <string>Изменить цвет кнопок</string>
               </property>
              </widget>
             </item>
@@ -625,26 +635,6 @@
      </layout>
     </item>
    </layout>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1022</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-    <addaction name="actionNew"/>
-    <addaction name="actionOpen"/>
-    <addaction name="actionSave"/>
-    <addaction name="actionExit"/>
-   </widget>
-   <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew">
@@ -680,6 +670,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="test.qrc"/>
+ </resources>
  <connections/>
 </ui>
