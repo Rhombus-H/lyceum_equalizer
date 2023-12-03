@@ -3,7 +3,7 @@ import sys
 
 import test_qrc  # resource for a picture
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QColorDialog, QInputDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QInputDialog
 
 import sqlite3
 import logging
@@ -22,16 +22,6 @@ class Main(QMainWindow):
         self.change_color_button.clicked.connect(self.change_color_of_buttons)
         self.preset_delete_button.clicked.connect(self.delete_preset_button_clicked)
         self.preset_add_button.clicked.connect(self.add_preset_button_clicked)
-
-    def change_color_of_buttons(self):
-        color = QColorDialog.getColor()
-        if color.isValid():
-            self.change_color_button.setStyleSheet(
-                "background-color: {}".format(color.name()))
-            self.pushButton.setStyleSheet(
-                "background-color: {}".format(color.name()))
-            self.accept_button.setStyleSheet(
-                "background-color: {}".format(color.name()))
 
     def add_preset_button_clicked(self):
         index = self.presets_list.currentRow()
