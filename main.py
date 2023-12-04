@@ -243,8 +243,9 @@ class Main(QMainWindow):
         cursor.close()
 
     def apply_preset(self):
-        self.set_preamp_value
-        self.set_slider_values
+        preset_name = self.presets_list.currentItem().text()
+        self.set_slider_values(preset_name)
+        self.set_preamp_value(preset_name)
 
 
 if __name__ == "__main__":
