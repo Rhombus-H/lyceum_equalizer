@@ -4,7 +4,7 @@ from pathlib import Path
 
 import test_qrc  # resource for a picture
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QColorDialog, QInputDialog, QListWidgetItem, \
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QInputDialog, QListWidgetItem, \
     QFileDialog
 
 import sqlite3
