@@ -2,15 +2,12 @@ import sqlite3
 import sys
 from pathlib import Path
 
-import test_qrc  # resource for a picture
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QInputDialog, QListWidgetItem, \
     QFileDialog
 
-import sqlite3
-import logging
-from pydub import AudioSegment
-from pydub import effects
+# from pydub import AudioSegment
+# from pydub import effects <-- понадобится позже
 from transliterate import translit
 
 
