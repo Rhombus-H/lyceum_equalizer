@@ -457,16 +457,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="VolumeEdit">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QLabel" name="min_db_sound">
           <property name="text">
            <string>-30 Дб</string>
@@ -510,14 +500,14 @@
      </layout>
     </item>
     <item>
-     <widget class="QPushButton" name="play_track">
+     <widget class="QPushButton" name="play_track_button">
       <property name="text">
        <string>Играть</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pause_track">
+     <widget class="QPushButton" name="pause_track_button">
       <property name="text">
        <string>Пауза</string>
       </property>
@@ -576,11 +566,6 @@
               <property name="styleSheet">
                <string notr="true">background-image: url(:/test/x182.jpg.pagespeed.ic.3t0nB9RsUt.jpg);</string>
               </property>
-              <item>
-               <property name="text">
-                <string>test</string>
-               </property>
-              </item>
              </widget>
             </item>
             <item>
@@ -598,16 +583,9 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="preset_accept_button">
+             <widget class="QPushButton" name="preset_apply_button">
               <property name="text">
                <string>Принять</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="change_color_button">
-              <property name="text">
-               <string>Изменить цвет кнопок</string>
               </property>
              </widget>
             </item>
@@ -622,16 +600,19 @@
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Expanding</enum>
+        </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
-          <height>20</height>
+          <width>20</width>
+          <height>40</height>
          </size>
         </property>
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="load_track_button">
         <property name="text">
          <string>Загрузить песню</string>
         </property>

@@ -1,0 +1,4 @@
+[flake8]
+extend-ignore = E203, I100
+inline-quotes = single
+exclude =.git,__pycache__,venv,static,.vscode,widgets,test_qrc.py
