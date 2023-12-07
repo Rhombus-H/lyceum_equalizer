@@ -34,14 +34,17 @@
         </item>
         <item>
          <widget class="QSlider" name="slider_1">
+          <property name="minimum">
+           <number>-30</number>
+          </property>
           <property name="maximum">
-           <number>8</number>
+           <number>30</number>
           </property>
           <property name="pageStep">
            <number>1</number>
           </property>
           <property name="value">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -54,7 +57,7 @@
         <item>
          <widget class="QLabel" name="slider_1_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30db to +30db</string>
           </property>
          </widget>
         </item>
@@ -91,7 +94,7 @@
         <item>
          <widget class="QLabel" name="slider_2_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30db to +30db</string>
           </property>
          </widget>
         </item>
@@ -128,7 +131,7 @@
         <item>
          <widget class="QLabel" name="slider_3_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30db to +30db</string>
           </property>
          </widget>
         </item>
@@ -171,7 +174,7 @@
         <item>
          <widget class="QLabel" name="slider_4_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30db to +30db</string>
           </property>
          </widget>
         </item>
@@ -208,7 +211,7 @@
         <item>
          <widget class="QLabel" name="slider_5_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30db to +30db</string>
           </property>
          </widget>
         </item>
@@ -245,7 +248,7 @@
         <item>
          <widget class="QLabel" name="slider_6_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30db to +30db</string>
           </property>
          </widget>
         </item>
@@ -288,7 +291,7 @@
         <item>
          <widget class="QLabel" name="slider_7_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30db to +30db</string>
           </property>
          </widget>
         </item>
@@ -325,7 +328,7 @@
         <item>
          <widget class="QLabel" name="slider_8_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30db to +30db</string>
           </property>
          </widget>
         </item>
@@ -362,7 +365,7 @@
         <item>
          <widget class="QLabel" name="slider_9_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30db to +30db</string>
           </property>
          </widget>
         </item>
@@ -399,7 +402,7 @@
         <item>
          <widget class="QLabel" name="slider_10_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30db to +30db</string>
           </property>
          </widget>
         </item>

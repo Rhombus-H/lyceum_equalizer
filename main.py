@@ -3,12 +3,12 @@ import sys
 from pathlib import Path
 
 from PyQt5 import uic
+from PyQt5.QtCore import QByteArray
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QInputDialog, QListWidgetItem, \
     QFileDialog
-
-# from pydub import AudioSegment
-# from pydub import effects <-- понадобится позже
-from transliterate import translit
+from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
+import librosa
+import numpy as np
 
 
 class Main(QMainWindow):
@@ -94,6 +94,9 @@ class Main(QMainWindow):
             path = Path(file)
             self.load_track_button.text = 'Файл загружен'
             self.path = path
+            return path
+        return
+    # Create a function that plays the equalized audio from the function below using the path given from the function above
 
     def delete_preset_button_clicked(self):
         """
@@ -242,10 +245,48 @@ class Main(QMainWindow):
         connection.commit()
         cursor.close()
 
-    def apply_preset(self):
-        preset_name = self.presets_list.currentItem().text()
-        self.set_slider_values(preset_name)
-        self.set_preamp_value(preset_name)
+    def apply_equalizer(audio_path, bands):
+        # Load audio file
+        y, sr = librosa.load(audio_path)
+
+        # Compute the magnitude spectrogram
+        D = np.abs(librosa.stft(y))
+
+        # Apply equalization to each frequency band
+        for band_idx, (low_freq, high_freq, gain) in enumerate(bands):
+            # Convert frequency range to bin indices
+            low_bin = librosa.note_to_hz(low_freq) / (sr / 2)
+            high_bin = librosa.note_to_hz(high_freq) / (sr / 2)
+
+            # Apply gain to the corresponding frequency range
+            D[int(low_bin * D.shape[0]):int(high_bin * D.shape[0])] *= 10**(gain / 20)
+
+        # Reconstruct audio from the modified spectrogram
+        y_eq = librosa.istft(D)
+
+        # Return the equalized audio as an object with both audio data and sample rate
+        equalized_audio = {
+            'audio': y_eq,
+            'sample_rate': sr
+        }
+
+        return equalized_audio
+
+    def play_audio(self, path):
+        data = self.get_slider_values_from_ui()
+        bands = [(10, 21, data[0]), (21, 42, data[1]), (42, 83, data[2]),
+            (83, 166, data[3]), (166, 333, data[4]), (333, 577, data[5]),
+            (577, 1000, data[6]), (1000, 4000, data[7]), (4000, 8000, data[8])
+            ]
+        equalized_audio = self.apply_equalizer(path, bands)
+        audio_data = equalized_audio['audio']
+        sample_rate = equalized_audio['sample_rate']
+        player = QMediaPlayer()
+        content = QMediaContent()
+        content.setMedia(QByteArray(audio_data.tobytes()), 'audio/wav')
+        player.setNotifyInterval(int(1000 / sample_rate))
+        player.setMedia(content)
+        player.play()
 
 
 if __name__ == "__main__":
