@@ -1,22 +1,28 @@
+import os
 import sqlite3
 import sys
 from pathlib import Path
 
 from PyQt5 import uic
-from PyQt5.QtCore import QByteArray
+from PyQt5.QtCore import QByteArray, QUrl
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QInputDialog, QListWidgetItem, \
     QFileDialog
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
-import librosa
-import numpy as np
+from pydub import AudioSegment
+from pydub.generators import Sine
+
+from transliterate import translit
 
 
 class Main(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.path = None
+        self.path = Path()
         uic.loadUi("static/main_window.ui", self)
         self.initUI()
+
+        self.player = QMediaPlayer()
+        self.content = QMediaContent()
 
     def initUI(self):
         self.preset_delete_button.clicked.connect(self.delete_preset_button_clicked)
@@ -25,6 +31,9 @@ class Main(QMainWindow):
         self.set_presets_list()
         self.load_track_button.clicked.connect(self.add_audio_button_clicked)
         self.preset_apply_button.clicked.connect(self.apply_preset_button_clicked)
+
+        self.play_track_button.clicked.connect(self.play_audio_button_clicked)
+        self.pause_track_button.clicked.connect(self.pause_audio)
 
     def set_presets_list(self):
         """
@@ -61,12 +70,17 @@ class Main(QMainWindow):
         index = self.presets_list.currentRow()
         preset_name, ok = QInputDialog.getText(self, "Новый пресет", "Название пресета")
         try:
-            self.create_preset(preset_name)
             if preset_name and ok:
+                self.create_preset(preset_name)
                 self.presets_list.insertItem(index, preset_name)
         except sqlite3.OperationalError:
             # self.preset_name_field.setplaceholderText("Такой пресет уже существует.")
             pass
+
+    def play_audio_button_clicked(self):
+        if self.path:
+            return self.play_audio()
+        pass
 
     def apply_preset_button_clicked(self):
         """
@@ -79,6 +93,12 @@ class Main(QMainWindow):
             None
         """
         index = self.presets_list.currentRow()
+        if index == -1:
+            return QMessageBox.information(
+                self,
+                "Пресет не выбран",
+                "Вы не выбрали пресет"
+            )
         preset_name = self.presets_list.item(index).text()
         self.set_slider_values(preset_name)
         self.set_preamp_value(preset_name)
@@ -87,16 +107,16 @@ class Main(QMainWindow):
         file, ok = QFileDialog.getOpenFileName(
             self,
             'Выберите аудиофайл',
-            'C:\\'
-            'Audio (*.mp3 *.wav *.ogg *.wma)'
+            'C:\\',
+            'Аудиофайлы (*.mp3 *.wav *.ogg *.wma)'
         )
-        if file:
+        if file and ok:
             path = Path(file)
             self.load_track_button.text = 'Файл загружен'
             self.path = path
+            self.load_track_button.setText(f'Загружен файл {self.path.name}')
             return path
         return
-    # Create a function that plays the equalized audio from the function below using the path given from the function above
 
     def delete_preset_button_clicked(self):
         """
@@ -113,6 +133,12 @@ class Main(QMainWindow):
             None
         """
         index = self.presets_list.currentRow()
+        if index == -1:
+            return QMessageBox.information(
+                self,
+                "Пресет не выбран",
+                "Вы не выбрали пресет"
+            )
         preset_name = self.presets_list.item(index).text()
         if not self.presets_list.count():
             alert = QMessageBox.about(self, "Ошибка", "")
@@ -122,13 +148,12 @@ class Main(QMainWindow):
                 return
 
             question = QMessageBox.question(self, "Удаление пресета",
-            "Вы хотите удалить пресет " + str(preset_name) + '?',
-                                        QMessageBox.Yes | QMessageBox.No)
+                                            "Вы хотите удалить пресет " + str(preset_name) + '?',
+                                            QMessageBox.Yes | QMessageBox.No)
 
             if question == QMessageBox.Yes:
                 item = self.presets_list.takeItem(index)
                 del item
-
 
     def get_slider_values_from_ui(self):
         """
@@ -138,7 +163,7 @@ class Main(QMainWindow):
             slider_values (dict): A dictionary containing the names of the sliders as keys and their corresponding values as values.
         """
         slider_values = {}
-        for i in range(6):
+        for i in range(10):
             slider_name = f"slider_{i + 1}"
             slider_value = getattr(self, slider_name).value()
             slider_values[slider_name] = slider_value
@@ -155,7 +180,8 @@ class Main(QMainWindow):
             list: A list of slider values retrieved from the database.
         """
         cursor = sqlite3.connect('presets_base.db').cursor()
-        cursor.execute('SELECT frequency_1, frequency_2, frequency_3, frequency_4, frequency_5, frequency_6 WHERE name=?', (preset,))
+        cursor.execute('''SELECT frequency_1, frequency_2, frequency_3, frequency_4, frequency_5, 
+        frequency_6, frequency_7, frequency_8, frequency_9, frequency_10 WHERE name=?''', (preset,))
         slider_values = cursor.fetchall()
         return slider_values
 
@@ -193,7 +219,7 @@ class Main(QMainWindow):
             None
         """
         slider_values = self.get_slider_values_from_db(preset)
-        for i in range(6):
+        for i in range(10):
             slider_name = f"slider_{i + 1}"
             slider_value = slider_values[i]
             setattr(self, slider_name, slider_value)
@@ -228,12 +254,14 @@ class Main(QMainWindow):
         data = list(data.values())
         connection = sqlite3.connect('presets_base.db')
         cursor = connection.cursor()
-        cursor.execute('SELECT name FROM presets WHERE name=?', (preset_name, ))
+        cursor.execute('SELECT name FROM presets WHERE name=?', (preset_name,))
         if cursor.fetchall():
             return sqlite3.OperationalError
         else:
-            query = f'INSERT INTO presets VALUES ({', '.join([f"'{preset_name}'", str(data[0]), str(data[1]), str(data[2]),
-            str(data[3]), str(data[4]), str(data[5]), str(data[6])])})'
+            query = f'''INSERT INTO presets 
+            VALUES ({', '.join([f"'{preset_name}'", str(data['slider_1']), str(data['slider_2']), str(data['slider_3']),
+                                str(data['slider_4']), str(data['slider_5']), str(data['slider_6']), str(data['slider_7']),
+                                str(data['slider_8']), str(data['slider_8']), str(data['slider_8'])])})'''
             cursor.execute(query)
             connection.commit()
             cursor.close()
@@ -245,48 +273,35 @@ class Main(QMainWindow):
         connection.commit()
         cursor.close()
 
-    def apply_equalizer(audio_path, bands):
-        # Load audio file
-        y, sr = librosa.load(audio_path)
+    def play_audio(self):
+        data = self.get_slider_values_from_ui().values()
+        frequencies = [10, 21, 42, 83, 166, 333, 577, 1000, 2000, 4000]
+        frequency_values = {i: j for i, j in zip(frequencies, data)}
+        # Read the audio file
+        # Read the audio file using pydub
+        audio = AudioSegment.from_file(str(self.path))
 
-        # Compute the magnitude spectrogram
-        D = np.abs(librosa.stft(y))
+        # Create a silence audio segment with the same duration as the original audio
+        silence = AudioSegment.silent(duration=len(audio))
 
-        # Apply equalization to each frequency band
-        for band_idx, (low_freq, high_freq, gain) in enumerate(bands):
-            # Convert frequency range to bin indices
-            low_bin = librosa.note_to_hz(low_freq) / (sr / 2)
-            high_bin = librosa.note_to_hz(high_freq) / (sr / 2)
+        # Apply equalization by adding sine waves to the silence audio segment
+        for frequency, value in frequency_values.items():
+            sine_wave = Sine(frequency).to_audio_segment(duration=len(audio))
+            equalized_segment = sine_wave.apply_gain(value)
+            silence = silence.overlay(equalized_segment)
 
-            # Apply gain to the corresponding frequency range
-            D[int(low_bin * D.shape[0]):int(high_bin * D.shape[0])] *= 10**(gain / 20)
+        # Mix the original audio with the equalized audio
+        audio = audio.overlay(silence)
+        audio = audio + self.get_preamp_value_from_ui()
 
-        # Reconstruct audio from the modified spectrogram
-        y_eq = librosa.istft(D)
+        # Save the equalized audio file
+        audio.export(self.path.name, format='mp3')
+        self.content = QMediaContent(QUrl.fromLocalFile(os.path.abspath(self.path.name)))
+        self.player.setMedia(self.content)
+        self.player.play()
 
-        # Return the equalized audio as an object with both audio data and sample rate
-        equalized_audio = {
-            'audio': y_eq,
-            'sample_rate': sr
-        }
-
-        return equalized_audio
-
-    def play_audio(self, path):
-        data = self.get_slider_values_from_ui()
-        bands = [(10, 21, data[0]), (21, 42, data[1]), (42, 83, data[2]),
-            (83, 166, data[3]), (166, 333, data[4]), (333, 577, data[5]),
-            (577, 1000, data[6]), (1000, 4000, data[7]), (4000, 8000, data[8])
-            ]
-        equalized_audio = self.apply_equalizer(path, bands)
-        audio_data = equalized_audio['audio']
-        sample_rate = equalized_audio['sample_rate']
-        player = QMediaPlayer()
-        content = QMediaContent()
-        content.setMedia(QByteArray(audio_data.tobytes()), 'audio/wav')
-        player.setNotifyInterval(int(1000 / sample_rate))
-        player.setMedia(content)
-        player.play()
+    def pause_audio(self):
+        self.player.pause()
 
 
 if __name__ == "__main__":
