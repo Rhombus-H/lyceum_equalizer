@@ -3,13 +3,13 @@ import sqlite3
 import sys
 from pathlib import Path
 
+import librosa
 from PyQt5 import uic
 from PyQt5.QtCore import QByteArray, QUrl
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QInputDialog, QListWidgetItem, \
     QFileDialog
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
-from pydub import AudioSegment
-from pydub.generators import Sine
+import numpy as np
 
 from transliterate import translit
 
@@ -273,30 +273,48 @@ class Main(QMainWindow):
         connection.commit()
         cursor.close()
 
+    def apply_equalization(self):
+        # Load audio file
+        y, sr = librosa.load(self.path)
+
+        # Compute the magnitude spectrogram
+        D = np.abs(librosa.stft(y))
+
+        central_frequencies = [10, 21, 42, 83, 166, 333, 577, 1000, 2000, 4000]
+
+        data = list(self.get_slider_values_from_ui().values())
+
+        # Apply equalization to each central frequency
+        for freq_idx, central_freq in enumerate(central_frequencies):
+            # Convert central frequency from Hz to note name
+            note_name = librosa.hz_to_note(central_freq)
+
+            # Convert note name back to frequency in Hz
+            central_hz = librosa.note_to_hz(note_name)
+
+            # Convert central frequency to bin index
+            central_bin = central_hz / (sr / 2)
+
+            # Apply gain to the corresponding frequency band
+            D[int(central_bin * D.shape[0])] *= 10 ** (data[freq_idx] / 20)
+
+        # Reconstruct audio from the modified spectrogram
+        y_eq = librosa.istft(D)
+
+        # Return the equalized audio as an object with both audio data and sample rate
+        equalized_audio = {
+            'audio': y_eq,
+            'sample_rate': sr
+        }
+
+        return equalized_audio
+
     def play_audio(self):
-        data = self.get_slider_values_from_ui().values()
-        frequencies = [10, 21, 42, 83, 166, 333, 577, 1000, 2000, 4000]
-        frequency_values = {i: j for i, j in zip(frequencies, data)}
-        # Read the audio file
-        # Read the audio file using pydub
-        audio = AudioSegment.from_file(str(self.path))
-
-        # Create a silence audio segment with the same duration as the original audio
-        silence = AudioSegment.silent(duration=len(audio))
-
-        # Apply equalization by adding sine waves to the silence audio segment
-        for frequency, value in frequency_values.items():
-            sine_wave = Sine(frequency).to_audio_segment(duration=len(audio))
-            equalized_segment = sine_wave.apply_gain(value)
-            silence = silence.overlay(equalized_segment)
-
-        # Mix the original audio with the equalized audio
-        audio = audio.overlay(silence)
-        audio = audio + self.get_preamp_value_from_ui()
-
-        # Save the equalized audio file
-        audio.export(self.path.name, format='mp3')
-        self.content = QMediaContent(QUrl.fromLocalFile(os.path.abspath(self.path.name)))
+        equalized_audio = self.apply_equalization()
+        audio_data = equalized_audio['audio']
+        sample_rate = equalized_audio['sample_rate']
+        self.content = QMediaContent(QByteArray(audio_data.tobytes()), 'audio/wav')
+        self.player.setNotifyInterval(int(1000 / sample_rate))
         self.player.setMedia(self.content)
         self.player.play()
 
