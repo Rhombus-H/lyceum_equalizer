@@ -78,7 +78,7 @@ class Main(QMainWindow):
             pass
 
     def play_audio_button_clicked(self):
-        if self.path:
+        if self.path.name:
             return self.play_audio()
         pass
 
@@ -313,7 +313,7 @@ class Main(QMainWindow):
         equalized_audio = self.apply_equalization()
         audio_data = equalized_audio['audio']
         sample_rate = equalized_audio['sample_rate']
-        self.content = QMediaContent(QByteArray(audio_data.tobytes()), 'audio/wav')
+ъ        self.content = QMediaContent(QByteArray(audio_data.tobytes()), 'audio/wav')
         self.player.setNotifyInterval(int(1000 / sample_rate))
         self.player.setMedia(self.content)
         self.player.play()
