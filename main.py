@@ -259,9 +259,9 @@ class Main(QMainWindow):
             return sqlite3.OperationalError
         else:
             query = f'''INSERT INTO presets 
-            VALUES ({', '.join([f"'{preset_name}'", str(data['slider_1']), str(data['slider_2']), str(data['slider_3']),
-                                str(data['slider_4']), str(data['slider_5']), str(data['slider_6']), str(data['slider_7']),
-                                str(data['slider_8']), str(data['slider_8']), str(data['slider_8'])])})'''
+            VALUES ({', '.join([f"'{preset_name}'", str(data[0]), str(data[1]), str(data[2]),
+                                str(data[3]), str(data[4]), str(data[5]), str(data[6]),
+                                str(data[7]), str(data[8]), str(data[9]), str(data[10])])})'''
             cursor.execute(query)
             connection.commit()
             cursor.close()
@@ -313,7 +313,7 @@ class Main(QMainWindow):
         equalized_audio = self.apply_equalization()
         audio_data = equalized_audio['audio']
         sample_rate = equalized_audio['sample_rate']
-ъ        self.content = QMediaContent(QByteArray(audio_data.tobytes()), 'audio/wav')
+        self.content = QMediaContent(QByteArray(audio_data.tobytes()), 'audio/wav')
         self.player.setNotifyInterval(int(1000 / sample_rate))
         self.player.setMedia(self.content)
         self.player.play()
