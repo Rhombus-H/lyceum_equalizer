@@ -3,14 +3,14 @@ import sqlite3
 import sys
 from pathlib import Path
 
-import librosa
+import librosa as ls
 from PyQt5 import uic
-from PyQt5.QtCore import QByteArray, QUrl
+from PyQt5.QtCore import QByteArray, QUrl, QBuffer, QIODevice
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QInputDialog, QListWidgetItem, \
     QFileDialog
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 import numpy as np
-
+import sounddevice as sd
 from transliterate import translit
 
 
@@ -21,8 +21,7 @@ class Main(QMainWindow):
         uic.loadUi("static/main_window.ui", self)
         self.initUI()
 
-        self.player = QMediaPlayer()
-        self.content = QMediaContent()
+        self.bands_frequencies = [10, 21, 42, 83, 166, 333, 577, 1000, 2000, 4000]
 
     def initUI(self):
         self.preset_delete_button.clicked.connect(self.delete_preset_button_clicked)
@@ -274,52 +273,43 @@ class Main(QMainWindow):
         cursor.close()
 
     def apply_equalization(self):
-        # Load audio file
-        y, sr = librosa.load(self.path)
+        y, sr = ls.load(self.path, sr=None)
 
-        # Compute the magnitude spectrogram
-        D = np.abs(librosa.stft(y))
+        D = np.abs(ls.stft(y))
 
-        central_frequencies = [10, 21, 42, 83, 166, 333, 577, 1000, 2000, 4000]
+        slider_values = self.get_slider_values_from_ui()
 
-        data = list(self.get_slider_values_from_ui().values())
+        for i, frequency in enumerate(self.bands_frequencies):
+            # band_gain = self.slider_values[f'slider_{i + 1}']
+            #
+            # # Apply bandpass filter
+            # y_band = ls.effects.biquad(y, sr=sr, ftype='bandpass', f0=frequency, Q=1.0)
+            #
+            # # Apply gain to the band
+            # y = y + band_gain * y_band
 
-        # Apply equalization to each central frequency
-        for freq_idx, central_freq in enumerate(central_frequencies):
             # Convert central frequency from Hz to note name
-            note_name = librosa.hz_to_note(central_freq)
+            note_name = ls.hz_to_note(frequency)
 
             # Convert note name back to frequency in Hz
-            central_hz = librosa.note_to_hz(note_name)
+            central_hz = ls.note_to_hz(note_name)
 
             # Convert central frequency to bin index
             central_bin = central_hz / (sr / 2)
 
             # Apply gain to the corresponding frequency band
-            D[int(central_bin * D.shape[0])] *= 10 ** (data[freq_idx] / 20)
-
-        # Reconstruct audio from the modified spectrogram
-        y_eq = librosa.istft(D)
-
-        # Return the equalized audio as an object with both audio data and sample rate
-        equalized_audio = {
-            'audio': y_eq,
-            'sample_rate': sr
-        }
-
-        return equalized_audio
+            D[int(central_bin * D.shape[0])] *= 10 ** (slider_values[f'slider_{i + 1}'] / 20)
+            
+        y = ls.istft(D)
+        
+        return y, sr
 
     def play_audio(self):
-        equalized_audio = self.apply_equalization()
-        audio_data = equalized_audio['audio']
-        sample_rate = equalized_audio['sample_rate']
-        self.content = QMediaContent(QByteArray(audio_data.tobytes()), 'audio/wav')
-        self.player.setNotifyInterval(int(1000 / sample_rate))
-        self.player.setMedia(self.content)
-        self.player.play()
+        audio_data, sample_rate = self.apply_equalization()
+        sd.play(audio_data, sample_rate)
 
     def pause_audio(self):
-        self.player.pause()
+        sd.stop()
 
 
 if __name__ == "__main__":
