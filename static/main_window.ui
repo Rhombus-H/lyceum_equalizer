@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1022</width>
-    <height>952</height>
+    <width>900</width>
+    <height>835</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -34,14 +34,17 @@
         </item>
         <item>
          <widget class="QSlider" name="slider_1">
+          <property name="minimum">
+           <number>-30</number>
+          </property>
           <property name="maximum">
-           <number>8</number>
+           <number>30</number>
           </property>
           <property name="pageStep">
            <number>1</number>
           </property>
           <property name="value">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -54,7 +57,7 @@
         <item>
          <widget class="QLabel" name="slider_1_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30 Hz to +30 Hz</string>
           </property>
          </widget>
         </item>
@@ -71,14 +74,17 @@
         </item>
         <item>
          <widget class="QSlider" name="slider_2">
+          <property name="minimum">
+           <number>-30</number>
+          </property>
           <property name="maximum">
-           <number>8</number>
+           <number>30</number>
           </property>
           <property name="pageStep">
            <number>1</number>
           </property>
           <property name="value">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -91,7 +97,7 @@
         <item>
          <widget class="QLabel" name="slider_2_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30 Hz to +30 Hz</string>
           </property>
          </widget>
         </item>
@@ -108,14 +114,17 @@
         </item>
         <item>
          <widget class="QSlider" name="slider_3">
+          <property name="minimum">
+           <number>-30</number>
+          </property>
           <property name="maximum">
-           <number>8</number>
+           <number>30</number>
           </property>
           <property name="pageStep">
            <number>1</number>
           </property>
           <property name="value">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -128,7 +137,7 @@
         <item>
          <widget class="QLabel" name="slider_3_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30 Hz to +30 Hz</string>
           </property>
          </widget>
         </item>
@@ -151,14 +160,17 @@
           <property name="styleSheet">
            <string notr="true">color: rgb(0, 0, 0);</string>
           </property>
+          <property name="minimum">
+           <number>-30</number>
+          </property>
           <property name="maximum">
-           <number>8</number>
+           <number>30</number>
           </property>
           <property name="pageStep">
            <number>1</number>
           </property>
           <property name="value">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -171,7 +183,7 @@
         <item>
          <widget class="QLabel" name="slider_4_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30 Hz to +30 Hz</string>
           </property>
          </widget>
         </item>
@@ -188,14 +200,17 @@
         </item>
         <item>
          <widget class="QSlider" name="slider_5">
+          <property name="minimum">
+           <number>-30</number>
+          </property>
           <property name="maximum">
-           <number>8</number>
+           <number>30</number>
           </property>
           <property name="pageStep">
            <number>1</number>
           </property>
           <property name="value">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -208,7 +223,7 @@
         <item>
          <widget class="QLabel" name="slider_5_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30 Hz to +30 Hz</string>
           </property>
          </widget>
         </item>
@@ -225,14 +240,17 @@
         </item>
         <item>
          <widget class="QSlider" name="slider_6">
+          <property name="minimum">
+           <number>-30</number>
+          </property>
           <property name="maximum">
-           <number>8</number>
+           <number>30</number>
           </property>
           <property name="pageStep">
            <number>1</number>
           </property>
           <property name="value">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -245,7 +263,7 @@
         <item>
          <widget class="QLabel" name="slider_6_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30 Hz to +30 Hz</string>
           </property>
          </widget>
         </item>
@@ -268,14 +286,17 @@
             <height>0</height>
            </size>
           </property>
+          <property name="minimum">
+           <number>-30</number>
+          </property>
           <property name="maximum">
-           <number>8</number>
+           <number>30</number>
           </property>
           <property name="pageStep">
            <number>1</number>
           </property>
           <property name="value">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -288,7 +309,7 @@
         <item>
          <widget class="QLabel" name="slider_7_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30 Hz to +30 Hz</string>
           </property>
          </widget>
         </item>
@@ -305,14 +326,17 @@
         </item>
         <item>
          <widget class="QSlider" name="slider_8">
+          <property name="minimum">
+           <number>-30</number>
+          </property>
           <property name="maximum">
-           <number>8</number>
+           <number>30</number>
           </property>
           <property name="pageStep">
            <number>1</number>
           </property>
           <property name="value">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -325,7 +349,7 @@
         <item>
          <widget class="QLabel" name="slider_8_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30 Hz to +30 Hz</string>
           </property>
          </widget>
         </item>
@@ -342,14 +366,17 @@
         </item>
         <item>
          <widget class="QSlider" name="slider_9">
+          <property name="minimum">
+           <number>-30</number>
+          </property>
           <property name="maximum">
-           <number>8</number>
+           <number>30</number>
           </property>
           <property name="pageStep">
            <number>1</number>
           </property>
           <property name="value">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -362,7 +389,7 @@
         <item>
          <widget class="QLabel" name="slider_9_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30 Hz to +30 Hz</string>
           </property>
          </widget>
         </item>
@@ -379,14 +406,20 @@
         </item>
         <item>
          <widget class="QSlider" name="slider_10">
+          <property name="minimum">
+           <number>-30</number>
+          </property>
           <property name="maximum">
-           <number>8</number>
+           <number>30</number>
           </property>
           <property name="pageStep">
            <number>1</number>
           </property>
           <property name="value">
-           <number>4</number>
+           <number>0</number>
+          </property>
+          <property name="tracking">
+           <bool>true</bool>
           </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -399,7 +432,7 @@
         <item>
          <widget class="QLabel" name="slider_10_label">
           <property name="text">
-           <string>1dB</string>
+           <string>-30 Hz to +30 Hz</string>
           </property>
          </widget>
         </item>
@@ -457,16 +490,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="spinBox">
-          <property name="minimum">
-           <number>-30</number>
-          </property>
-          <property name="maximum">
-           <number>30</number>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QLabel" name="min_db_sound">
           <property name="text">
            <string>-30 Дб</string>
@@ -477,7 +500,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QSlider" name="volume_slider">
+         <widget class="QSlider" name="preamp_slider">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -510,20 +533,18 @@
      </layout>
     </item>
     <item>
-     <spacer name="verticalSpacer_3">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
+     <widget class="QPushButton" name="play_track_button">
+      <property name="text">
+       <string>Играть</string>
       </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Minimum</enum>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pause_track_button">
+      <property name="text">
+       <string>Пауза</string>
       </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
+     </widget>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -575,28 +596,27 @@
                 <height>100</height>
                </size>
               </property>
-              <property name="autoFillBackground">
-               <bool>true</bool>
-              </property>
               <property name="styleSheet">
                <string notr="true">background-image: url(:/test/x182.jpg.pagespeed.ic.3t0nB9RsUt.jpg);</string>
               </property>
-              <item>
-               <property name="text">
-                <string>test</string>
-               </property>
-              </item>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="preset_add_button">
               <property name="text">
                <string>Добавить пресет</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="accept_button">
+             <widget class="QPushButton" name="preset_delete_button">
+              <property name="text">
+               <string>Удалить пресет</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="preset_apply_button">
               <property name="text">
                <string>Принять</string>
               </property>
@@ -607,6 +627,29 @@
          </layout>
         </item>
        </layout>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Expanding</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="load_track_button">
+        <property name="text">
+         <string>Загрузить песню</string>
+        </property>
+       </widget>
       </item>
       <item>
        <spacer name="horizontalSpacer">
@@ -624,26 +667,6 @@
      </layout>
     </item>
    </layout>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1022</width>
-     <height>18</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-    <addaction name="actionNew"/>
-    <addaction name="actionOpen"/>
-    <addaction name="actionSave"/>
-    <addaction name="actionExit"/>
-   </widget>
-   <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew">
