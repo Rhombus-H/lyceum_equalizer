@@ -2,7 +2,7 @@ import os
 import sqlite3
 import sys
 from pathlib import Path
-
+import test_qrc  # resource for the picture
 import librosa as ls
 from PyQt5 import uic
 from PyQt5.QtCore import QByteArray, QUrl, QBuffer, QIODevice
@@ -121,9 +121,16 @@ class Main(QMainWindow):
         """
         Deletes the selected preset on click.
 
-        This function is triggered when the delete preset button is clicked. It retrieves the index of the selected preset from the presets list and obtains the corresponding preset name. If the presets list is empty, an error message is displayed. Otherwise, the function calls the `delete_preset` method passing the preset name as an argument. If the preset name is `None`, the function returns without further actions.
+        This function is triggered when the delete preset button is clicked.
+        It retrieves the index of the selected preset from the presets list and obtains the corresponding preset name.
+        If the presets list is empty, an error message is displayed.
+        Otherwise, the function calls the `delete_preset` method passing the preset name as an argument.
+        If the preset name is `None`, the function returns without further actions.
 
-        After the `delete_preset` method is called, a confirmation message box is shown to the user, asking if they want to delete the preset. If the user clicks "Yes", the function removes the item from the presets list.
+        After the `delete_preset` method is called,
+        a confirmation message box is shown to the user,
+        asking if they want to delete the preset.
+        If the user clicks "Yes", the function removes the item from the presets list.
 
         Parameters:
             self (QWidget): The reference to the current instance of the class.
@@ -159,7 +166,8 @@ class Main(QMainWindow):
         Retrieves the values of the sliders from the UI and returns them as a dictionary.
 
         Returns:
-            slider_values (dict): A dictionary containing the names of the sliders as keys and their corresponding values as values.
+            slider_values (dict):
+            A dictionary containing the names of the sliders as keys and their corresponding values as values.
         """
         slider_values = {}
         for i in range(10):
