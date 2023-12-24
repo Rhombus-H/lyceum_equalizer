@@ -180,8 +180,8 @@ class Main(QMainWindow):
         """
         cursor = sqlite3.connect('presets_base.db').cursor()
         cursor.execute('''SELECT frequency_1, frequency_2, frequency_3, frequency_4, frequency_5, 
-        frequency_6, frequency_7, frequency_8, frequency_9, frequency_10 WHERE name=?''', (preset,))
-        slider_values = cursor.fetchall()
+        frequency_6, frequency_7, frequency_8, frequency_9, frequency_10 FROM presets WHERE name=?''', (f"{preset}",))
+        slider_values = list(cursor.fetchall()[0])
         return slider_values
 
     def get_preamp_value_from_ui(self):
@@ -203,8 +203,8 @@ class Main(QMainWindow):
             list: A list containing the preamp value(s) associated with the preset.
         """
         cursor = sqlite3.connect('presets_base.db').cursor()
-        cursor.execute('SELECT preamp WHERE name=?', (preset,))
-        preamp_value = cursor.fetchall()
+        cursor.execute('SELECT preamp FROM presets WHERE name=?', (preset,))
+        preamp_value = list(cursor.fetchall()[0])
         return preamp_value
 
     def set_slider_values(self, preset):
@@ -217,11 +217,18 @@ class Main(QMainWindow):
         Returns:
             None
         """
+        # tried using setattr, but it didn't work out
         slider_values = self.get_slider_values_from_db(preset)
-        for i in range(10):
-            slider_name = f"slider_{i + 1}"
-            slider_value = slider_values[i]
-            setattr(self, slider_name, slider_value)
+        self.slider_1.setValue(slider_values[0])
+        self.slider_2.setValue(slider_values[1])
+        self.slider_3.setValue(slider_values[2])
+        self.slider_4.setValue(slider_values[3])
+        self.slider_5.setValue(slider_values[4])
+        self.slider_6.setValue(slider_values[5])
+        self.slider_7.setValue(slider_values[6])
+        self.slider_8.setValue(slider_values[7])
+        self.slider_9.setValue(slider_values[8])
+        self.slider_10.setValue(slider_values[9])
 
     def set_preamp_value(self, preset):
         """
@@ -233,7 +240,7 @@ class Main(QMainWindow):
         Returns:
             None
         """
-        value = self.get_preamp_value_from_db(preset)
+        value = self.get_preamp_value_from_db(preset)[0]
         self.preamp_slider.setValue(value)
 
     def format_preset_name(self, ru_preset_name):
