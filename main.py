@@ -301,7 +301,10 @@ class Main(QMainWindow):
             D[int(central_bin * D.shape[0])] *= 10 ** (slider_values[f'slider_{i + 1}'] / 20)
             
         y = ls.istft(D)
-        
+
+        preamp_ratio = 10 ** (self.get_preamp_value_from_ui() / 20)
+        y *= preamp_ratio
+
         return y, sr
 
     def play_audio(self):
