@@ -18,7 +18,7 @@
 
 Вы можете открыть нашу программу 2 способами:
 
-1. Через exe-файл:
+1. Через exe-файл в папке гугл диска `https://drive.google.com/drive/u/1/folders/0AGIcAzj6E1UEUk9PVA`:
         - Откройте папку dist:
             В ней находятся:
                 exe-файл main.exe
