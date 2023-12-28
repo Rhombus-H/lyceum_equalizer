@@ -13,14 +13,19 @@
 
 
 ## Инструкция:
-Для установки dev-версии:
 - Установка зависимостей:
-    - `pip install -r requirements/dev.txt`
+    - `pip install -r requirements.txt`
 
-Для установки dist-версии (со сборкой):
-1. Установка зависимостей:
-    - `pip install -r requirements/dev.txt`
-    - `pip install -r requirements/dist.txt`
-2. Сборка:
-    - `*пласеыыыыы*`
+Вы можете открыть нашу программу 2 способами:
+
+1. Через exe-файл:
+        - Откройте папку dist:
+            В ней находятся:
+                exe-файл main.exe
+                база данных presets.db
+                папка с нужными файлами для декора static
+        - Запустите main.exe
+
+2. Через main.py:
+        - Запустите main.py
 
